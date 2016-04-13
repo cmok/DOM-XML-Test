@@ -36,7 +36,15 @@ public class ReadXMLFile {
     	for (int count = 0; count < nodeList.getLength(); count++) {
 			Node tempNode = nodeList.item(count);
 			
-			System.out.print("\nnodeCount=" + nodeCount++ + "," + nodeType(tempNode.getNodeType()) + "," + tempNode.getNodeValue());
+			if (tempNode.getNodeType() == Node.TEXT_NODE) {
+				if (tempNode.getTextContent().trim().equals("")) {
+					System.out.print("\nnodeCount=" + nodeCount++ + "," + nodeType(tempNode.getNodeType()));
+				} else {
+					System.out.print("\nnodeCount=" + nodeCount++ + "," + nodeType(tempNode.getNodeType()) + "," + tempNode.getTextContent().trim());
+				}
+			} else {
+				System.out.print("\nnodeCount=" + nodeCount++ + "," + nodeType(tempNode.getNodeType()) + "," + tempNode.getNodeValue());				
+			}
 			/*
 			if (tempNode.getNodeType() == Node.TEXT_NODE) {
 				System.out.print("\t" + tempNode.getTextContent());
