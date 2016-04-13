@@ -7,7 +7,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Element;
 import java.io.File;
  
-public class ReadXMLFile3 {
+public class ReadXMLFile {
 	public static void main(String[] args) {
     	try {
 			// File file = new File("/Users/mkyong/staff.xml");
@@ -21,26 +21,34 @@ public class ReadXMLFile3 {
 	
 			System.out.println("Root element :" + doc.getDocumentElement().getNodeName()); 
 			if (doc.hasChildNodes()) {
-				printNode(doc.getChildNodes());
+				printNode(doc.getChildNodes(), 0);
 			}
+			System.out.println(""); 
  
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
  	   }
 	}
 	
-	private static void printNode(NodeList nodeList) {
+	private static void printNode(NodeList nodeList, int level) {
     	for (int count = 0; count < nodeList.getLength(); count++) {
 			Node tempNode = nodeList.item(count);
 			
 			if (tempNode.getNodeType() == Node.TEXT_NODE) {
-				System.out.print("\t" + tempNode.getTextContent());
+				String text = tempNode.getTextContent().trim();
+				if (!text.equals("")) {
+					System.out.print(": " + text);
+				}
 			} else {
-				System.out.print(tempNode.getNodeName());				
+				System.out.println("");
+				for (int levelCount = 0; levelCount < level; levelCount++) {
+					System.out.print("\t");
+				}			
+				System.out.print(tempNode.getNodeName());
 			}
 			if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
 				if (tempNode.hasChildNodes()) {
-					printNode(tempNode.getChildNodes());
+					printNode(tempNode.getChildNodes(), level+1);
 				}
 			}			
 		}
